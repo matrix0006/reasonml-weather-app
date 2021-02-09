@@ -1,0 +1,26 @@
+.slider {
+  transform: rotate(-90deg) translate(0, 35px);
+}
+
+input[type="range"]{
+  width: 100%;
+  -webkit-appearance: none;
+  height: 35px;
+  border-radius: 30px;
+  position: relative;
+  background-color: white;
+  outline: none;
+  border: #d6d7da solid 1px;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  background-color: blue;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+}
+
+slider {
+  margin-left: auto;
+}

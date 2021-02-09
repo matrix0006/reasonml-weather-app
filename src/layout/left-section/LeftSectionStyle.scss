@@ -1,0 +1,42 @@
+.icon {
+  max-width: 24px;
+  max-height: 24px;
+}
+
+.text-input {
+  border: 0px;
+}
+
+.temperature-text {
+  font-size: 80px;
+}
+
+.weather-icon-large {
+  color: #924da3;
+  font-size: 150px;
+}
+
+.weather-icon-small {
+  color: #924da3;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.spacing {
+  margin-bottom: 80px;
+}
+
+.spacing-small {
+  margin-bottom: 30px;
+}
+
+.large-text {
+  font-size: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.col-wrapper {
+  padding-left: 50px;
+  padding-right: 50px;
+}
