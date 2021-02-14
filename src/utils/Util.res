@@ -1,5 +1,5 @@
-[@bs.val] external require: string => string = "require";
-[@bs.val] external requireCSS: string => unit = "require";
+@bs.val external require: string => string = "require";
+@bs.val external requireCSS: string => unit = "require";
 
 let kToC = (kDeg: float) => kDeg -. 273.15;
 
@@ -9,7 +9,7 @@ let makeIcon = (weatherId: int): string =>
   "wi wi-owm-" ++ string_of_int(weatherId) ++ "weather-icon-small";
 
 let windDirectionFromDegrees = (degree: float): string => {
-  let directions = [|
+  let directions = [
     "N",
     "NNE",
     "NE",
@@ -26,9 +26,10 @@ let windDirectionFromDegrees = (degree: float): string => {
     "WNW",
     "NW",
     "NNW",
-  |];
+  ];
   let i = int_of_float((degree +. 11.25) /. 22.5);
-  directions[i mod 16];
+  let position =  mod(i, 16);
+  directions[position]
 };
 
 let msTokmh = (speed: float): float => speed *. 3.6;
@@ -41,14 +42,14 @@ let toDate = (time: Js.Date.t): string => {
 };
 
 let dayTable =
-  Belt.Map.String.fromArray([|
+  Belt.Map.String.fromArray([
     ("0", "Sunday"),
     ("1", "Monday"),
     ("2", "Tuesday"),
     ("3", "Wednesday"),
     ("4", "Thursday"),
     ("6", "Friday"),
-  |]);
+  ]);
 
 let getDay = (date: float): string => {
   let optionDay =

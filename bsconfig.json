@@ -4,10 +4,13 @@
     "react-jsx": 3
   },
   "sources": {
-    "dir" : "src",
-    "subdirs" : true
+    "dir": "src",
+    "subdirs": true
   },
-  "bsc-flags": ["-bs-super-errors", "-bs-no-version-header"],
+  "bsc-flags": [
+    "-bs-super-errors",
+    "-bs-no-version-header"
+  ],
   "package-specs": [
     {
       "module": "es6",
@@ -16,6 +19,16 @@
   ],
   "suffix": ".bs.js",
   "namespace": true,
-  "bs-dependencies": ["reason-react", "@glennsl/bs-json", "bs-fetch", "bs-css", "bs-css-emotion"],
+  "bs-dependencies": [
+    "reason-react",
+    "bs-fetch",
+    "bs-bastet",
+    "bs-decode",
+    "bs-fetch",
+    "bs-webapi",
+    "reason-react",
+    "relude"
+  ],
+  "bs-dev-dependencies": [],
   "refmt": 3
 }

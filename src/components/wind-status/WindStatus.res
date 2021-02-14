@@ -1,8 +1,8 @@
 open Util;
 Util.requireCSS("./WindStatusStyle.scss");
 
-[@react.component]
-let make = (~wind: Types.wind) => {
+@react.component
+let make = (~wind: Shape.Wind.t) => {
   <Card>
     <h5 className="card-title mb-4"> {"Wind Status" |> React.string} </h5>
     <div className="card-number mb-4">

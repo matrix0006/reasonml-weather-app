@@ -12,7 +12,7 @@ function round(__x) {
 }
 
 function makeIcon(weatherId) {
-  return "wi wi-owm-" + (String(weatherId) + "weather-icon-small");
+  return "wi wi-owm-" + String(weatherId) + "weather-icon-small";
 }
 
 function windDirectionFromDegrees(degree) {
@@ -35,7 +35,8 @@ function windDirectionFromDegrees(degree) {
     "NNW"
   ];
   var i = (degree + 11.25) / 22.5 | 0;
-  return Caml_array.get(directions, i % 16);
+  var position = i % 16;
+  return Caml_array.get(directions, position);
 }
 
 function msTokmh(speed) {
@@ -85,11 +86,11 @@ function getDay(date) {
 }
 
 function getTime(date) {
-  return date.getUTCHours().toString() + (":" + date.getUTCMinutes().toString());
+  return date.getUTCHours().toString() + ":" + date.getUTCMinutes().toString();
 }
 
 function convertToDate(time) {
-  return getDay(new Date(time).getUTCDay()) + (", " + getTime(new Date(time)));
+  return getDay(new Date(time).getUTCDay()) + ", " + getTime(new Date(time));
 }
 
 function toMs(second) {

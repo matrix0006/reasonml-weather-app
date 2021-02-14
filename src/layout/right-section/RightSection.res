@@ -7,7 +7,7 @@ type dailyWeather = {
   temp: string,
 };
 
-let items: array(dailyWeather) = [|
+let items: array<dailyWeather> = [
   {day: "Sun", iconUrl: "a", temp: "b"},
   {day: "Mon", iconUrl: "a", temp: "b"},
   {day: "Tue", iconUrl: "a", temp: "b"},
@@ -15,16 +15,16 @@ let items: array(dailyWeather) = [|
   {day: "Thu", iconUrl: "a", temp: "b"},
   {day: "Fri", iconUrl: "a", temp: "b"},
   {day: "Sat", iconUrl: "a", temp: "b"},
-|];
+];
 
-[@react.component]
-let make = (~weatherData: Types.response) => {
+@react.component
+let make = (~weatherData: Shape.Response.t) => {
   React.useEffect1(
     () => {
       Js.log2("new props received", weatherData);
       None;
     },
-    [|weatherData|],
+    [weatherData],
   );
 
   <div className="row">

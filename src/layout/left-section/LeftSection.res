@@ -1,8 +1,8 @@
 open Util;
 Util.requireCSS("./LeftSectionStyle.scss");
 
-[@react.component]
-let make = (~weatherData: Types.response) => {
+@react.component
+let make = (~weatherData: Shape.Response.t) => {
   <div className="row">
     <div className="col col-wrapper py-3">
       <div className="input-group spacing">

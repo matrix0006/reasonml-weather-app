@@ -1,8 +1,7 @@
-open Types;
 open Util;
 
-[@react.component]
-let make = (~sys: sys, ~timezone: float) => {
+@react.component
+let make = (~sys: Shape.Sys.t, ~timezone: float) => {
   React.useEffect0(() => {
     Js.log((sys.sunrise +. timezone) *. 1000.0 |> Js.Date.fromFloat);
     None;
