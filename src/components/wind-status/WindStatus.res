@@ -1,5 +1,5 @@
 open Util;
-Util.requireCSS("./WindStatusStyle.scss");
+Util.requireCSS("./WindStatus.scss");
 
 @react.component
 let make = (~wind: Shape.Wind.t) => {

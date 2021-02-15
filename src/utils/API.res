@@ -59,4 +59,17 @@ let weather: unit => Js.Promise.t<Result.t<Shape.Response.t, Error.t>> = () => {
   )
 }
 
+let air: unit => Js.Promise.t<Result.t<Shape.Air.t, Error.t>> = () => { 
+  Endpoints.Air.fetch()
+  |> fetchWithInit(_, RequestInit.make(~method_=Get, ()))
+  |> then_(parseJsonIfOk)
+  |> then_(getErrorBodyText)
+  |> then_(result =>
+    result
+    |> Result.flatMap(json => json |> Shape.Air.decode |> Result.mapError(Error.decode))
+    |> resolve
+  )
+}
+
+
 

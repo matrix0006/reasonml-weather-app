@@ -137,3 +137,40 @@ module Response = {
     |> run(json)
   }
 }
+
+module AirData = {
+  type t = {
+    aqi: int,
+  }
+
+  let make = (aqi) => {
+    aqi: aqi
+  }
+
+  let decode = (json: Js.Json.t)=> {
+    open Decode.Pipeline
+    succeed(make)
+    |> field("aqi", intFromNumber)
+    |> run(json)
+  }
+}
+
+module Air = {
+  type t = {
+    status: string,
+    data: AirData.t,
+  }
+
+  let make = (status, data) => {
+    status: status,
+    data: data
+  }
+
+  let decode = (json: Js.Json.t)=> {
+    open Decode.Pipeline
+    succeed(make)
+    |> field("status", string)
+    |> field("data", AirData.decode)
+    |> run(json)
+  }
+}

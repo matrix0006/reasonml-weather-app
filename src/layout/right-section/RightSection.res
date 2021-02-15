@@ -1,5 +1,5 @@
 // open Util
-Util.requireCSS("./RightSectionStyle.scss");
+Util.requireCSS("./RightSection.scss");
 
 type dailyWeather = {
   day: string,
@@ -18,15 +18,7 @@ let items: array<dailyWeather> = [
 ];
 
 @react.component
-let make = (~weatherData: Shape.Response.t) => {
-  React.useEffect1(
-    () => {
-      Js.log2("new props received", weatherData);
-      None;
-    },
-    [weatherData],
-  );
-
+let make = (~weatherData: Shape.Response.t, ~airData: Shape.Air.t) => {
   <div className="row">
     <div className="col py-3 px-5">
       <div className="row">
@@ -47,7 +39,7 @@ let make = (~weatherData: Shape.Response.t) => {
         <div className="col"> <SunriseSunset sys={weatherData.sys} timezone={weatherData.timezone}/> </div>
         <div className="col"> <Humidity humidity={weatherData.main.humidity} /> </div>
         <div className="col"> <Visibility visibility={weatherData.visibility} /> </div>
-        // <div className="col"> <AirQuality airQualityIndex={3} /> </div>
+        <div className="col"> <AirQuality air={airData.data.aqi} /> </div>
       </div>
     </div>
   </div>;

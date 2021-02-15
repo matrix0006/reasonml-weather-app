@@ -4,11 +4,12 @@ import * as React from "react";
 import * as Belt_Array from "bs-platform/lib/es6/belt_Array.js";
 import * as UVIndex$ReasonmlReactApp from "../../components/uv-index/UVIndex.bs.js";
 import * as Humidity$ReasonmlReactApp from "../../components/humidity/Humidity.bs.js";
+import * as AirQuality$ReasonmlReactApp from "../../components/air-quality/AirQuality.bs.js";
 import * as Visibility$ReasonmlReactApp from "../../components/visibility/Visibility.bs.js";
 import * as WindStatus$ReasonmlReactApp from "../../components/wind-status/WindStatus.bs.js";
 import * as SunriseSunset$ReasonmlReactApp from "../../components/sunrise-sunset/SunriseSunset.bs.js";
 
-require("./RightSectionStyle.scss");
+require("./RightSection.scss");
 
 var items = [
   {
@@ -50,10 +51,7 @@ var items = [
 
 function RightSection(Props) {
   var weatherData = Props.weatherData;
-  React.useEffect((function () {
-          console.log("new props received", weatherData);
-          
-        }), [weatherData]);
+  var airData = Props.airData;
   return React.createElement("div", {
               className: "row"
             }, React.createElement("div", {
@@ -86,6 +84,10 @@ function RightSection(Props) {
                           className: "col"
                         }, React.createElement(Visibility$ReasonmlReactApp.make, {
                               visibility: weatherData.visibility
+                            })), React.createElement("div", {
+                          className: "col"
+                        }, React.createElement(AirQuality$ReasonmlReactApp.make, {
+                              air: airData.data.aqi
                             })))));
 }
 

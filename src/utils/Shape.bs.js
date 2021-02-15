@@ -92,6 +92,37 @@ var $$Response = {
   decode: decode$4
 };
 
+function make$5(aqi) {
+  return {
+          aqi: aqi
+        };
+}
+
+function decode$5(json) {
+  return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "aqi", Decode_AsResult_OfParseError.Pipeline.intFromNumber, Curry._1(Decode_AsResult_OfParseError.Pipeline.succeed, make$5)));
+}
+
+var AirData = {
+  make: make$5,
+  decode: decode$5
+};
+
+function make$6(status, data) {
+  return {
+          status: status,
+          data: data
+        };
+}
+
+function decode$6(json) {
+  return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "data", decode$5, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "status", Decode_AsResult_OfParseError.Pipeline.string, Curry._1(Decode_AsResult_OfParseError.Pipeline.succeed, make$6))));
+}
+
+var Air = {
+  make: make$6,
+  decode: decode$6
+};
+
 var Decode;
 
 export {
@@ -101,6 +132,8 @@ export {
   Wind ,
   Sys ,
   $$Response ,
+  AirData ,
+  Air ,
   
 }
 /* Decode_AsResult_OfParseError Not a pure module */

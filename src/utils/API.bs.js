@@ -64,6 +64,15 @@ function weather(param) {
             });
 }
 
+function air(param) {
+  var __x = Endpoints$ReasonmlReactApp.Air.$$fetch(undefined);
+  return fetch(__x, Fetch.RequestInit.make(/* Get */0, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(parseJsonIfOk).then(getErrorBodyText).then(function (result) {
+              return Promise.resolve(Relude_Result.flatMap((function (json) {
+                                return Curry._2(Relude_Result.mapError, Error$ReasonmlReactApp.decode, Shape$ReasonmlReactApp.Air.decode(json));
+                              }), result));
+            });
+}
+
 var Decode;
 
 export {
@@ -73,6 +82,7 @@ export {
   getErrorBodyJson ,
   getErrorBodyText ,
   weather ,
+  air ,
   
 }
 /* Relude_Result Not a pure module */

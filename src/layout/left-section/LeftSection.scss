@@ -1,7 +1,29 @@
-.icon {
-  max-width: 24px;
-  max-height: 24px;
+.text-input-wrapper {
+  .text-input {
+    margin-right: 5px;
+  }
+
+  .text-input:focus {
+    outline: none;
+  }
+
+  .icon-wrapper {
+    background-color: #f6f6f8;
+    border-radius: 50%;
+    padding: 5px;
+    min-width: 40px;
+    min-height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon {
+      max-width: 18px;
+      max-height: 18px;
+    }
+  }
 }
+
 
 .text-input {
   border: 0px;

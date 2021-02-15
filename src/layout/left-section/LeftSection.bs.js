@@ -4,7 +4,7 @@ import * as React from "react";
 import * as Belt_Array from "bs-platform/lib/es6/belt_Array.js";
 import * as Util$ReasonmlReactApp from "../../utils/Util.bs.js";
 
-require("./LeftSectionStyle.scss");
+require("./LeftSection.scss");
 
 function LeftSection(Props) {
   var weatherData = Props.weatherData;
@@ -13,12 +13,12 @@ function LeftSection(Props) {
             }, React.createElement("div", {
                   className: "col col-wrapper py-3"
                 }, React.createElement("div", {
-                      className: "input-group spacing"
+                      className: "flex-row d-flex text-input-wrapper spacing"
                     }, React.createElement("input", {
                           className: "text-input",
-                          placeholder: "Search for places ..."
+                          placeholder: "Search for places..."
                         }), React.createElement("div", {
-                          className: "input-group-append"
+                          className: "icon-wrapper"
                         }, React.createElement("img", {
                               className: "icon",
                               src: require("../../assets/icons/location.png")

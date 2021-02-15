@@ -4,7 +4,7 @@ import * as React from "react";
 import * as Card$ReasonmlReactApp from "../card/Card.bs.js";
 import * as Util$ReasonmlReactApp from "../../utils/Util.bs.js";
 
-require("./WindStatusStyle.scss");
+require("./WindStatus.scss");
 
 function WindStatus(Props) {
   var wind = Props.wind;
