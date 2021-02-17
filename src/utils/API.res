@@ -5,8 +5,7 @@ open Relude.Globals
 module Decode = Decode.AsResult.OfParseError
 
 module Action = {
-  type weatherResponse =
-    | Fetch
+  type weatherResponse = Fetch
 }
 
 let parseJsonIfOk: Fetch.Response.t => Js.Promise.t<Result.t<Js.Json.t, Fetch.Response.t>> = resp =>
@@ -47,7 +46,7 @@ let getErrorBodyText: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t<
     Error.fetch((status, statusText, bodyText)) |> Result.error |> resolve
   }
 
-let weather: unit => Js.Promise.t<Result.t<Shape.Response.t, Error.t>> = () => { 
+let weather: unit => Js.Promise.t<Result.t<Shape.Response.t, Error.t>> = () => {
   Endpoints.Weather.fetch()
   |> fetchWithInit(_, RequestInit.make(~method_=Get, ()))
   |> then_(parseJsonIfOk)
@@ -59,7 +58,7 @@ let weather: unit => Js.Promise.t<Result.t<Shape.Response.t, Error.t>> = () => {
   )
 }
 
-let air: unit => Js.Promise.t<Result.t<Shape.Air.t, Error.t>> = () => { 
+let air: unit => Js.Promise.t<Result.t<Shape.Air.t, Error.t>> = () => {
   Endpoints.Air.fetch()
   |> fetchWithInit(_, RequestInit.make(~method_=Get, ()))
   |> then_(parseJsonIfOk)
@@ -71,5 +70,26 @@ let air: unit => Js.Promise.t<Result.t<Shape.Air.t, Error.t>> = () => {
   )
 }
 
+let uvIndex: unit => Js.Promise.t<Result.t<Shape.UvIndex.t, Error.t>> = () => {
+  Endpoints.UvIndex.fetch()
+  |> fetchWithInit(_, RequestInit.make(~method_=Get, ()))
+  |> then_(parseJsonIfOk)
+  |> then_(getErrorBodyText)
+  |> then_(result =>
+    result
+    |> Result.flatMap(json => json |> Shape.UvIndex.decode |> Result.mapError(Error.decode))
+    |> resolve
+  )
+}
 
-
+let forecast: unit => Js.Promise.t<Result.t<Shape.Forecast.t, Error.t>> = () => {
+  Endpoints.Forecast.fetch()
+  |> fetchWithInit(_, RequestInit.make(~method_=Get, ()))
+  |> then_(parseJsonIfOk)
+  |> then_(getErrorBodyText)
+  |> then_(result =>
+    result
+    |> Result.flatMap(json => json |> Shape.Forecast.decode |> Result.mapError(Error.decode))
+    |> resolve
+  )
+}

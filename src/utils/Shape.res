@@ -20,7 +20,7 @@ module Main = {
     |> field("temp", floatFromNumber)
     |> field("pressure", floatFromNumber)
     |> field("humidity", intFromNumber)
-    |> run(json)    
+    |> run(json)
   }
 }
 
@@ -50,35 +50,32 @@ module Weather = {
 module Wind = {
   type t = {
     deg: float,
-    speed: float
+    speed: float,
   }
 
   let make = (deg, speed) => {
     deg: deg,
-    speed: speed
+    speed: speed,
   }
 
-  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure>=> {
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
     open Decode.Pipeline
-    succeed(make)
-    |> field("deg", floatFromNumber)  
-    |> field("speed", floatFromNumber)  
-    |> run(json)
+    succeed(make) |> field("deg", floatFromNumber) |> field("speed", floatFromNumber) |> run(json)
   }
 }
 
 module Sys = {
   type t = {
     sunrise: float,
-    sunset: float
+    sunset: float,
   }
 
   let make = (sunrise, sunset) => {
     sunrise: sunrise,
-    sunset: sunset
+    sunset: sunset,
   }
 
-  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure>=> {
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
     open Decode.Pipeline
     succeed(make)
     |> field("sunrise", floatFromNumber)
@@ -97,32 +94,22 @@ module Response = {
     dt: float,
     timezone: float,
     visibility: int,
-    sys: Sys.t
+    sys: Sys.t,
   }
 
-  let make = (
-    id,
-    name,
-    main,
-    weather,
-    wind,
-    dt,
-    timezone,
-    visibility,
-    sys
-  ) => {
-    id : id,
-    name : name,
-    main : main,
-    weather : weather,
-    wind : wind,
-    dt : dt,
-    timezone : timezone,
-    visibility : visibility,
-    sys : sys
+  let make = (id, name, main, weather, wind, dt, timezone, visibility, sys) => {
+    id: id,
+    name: name,
+    main: main,
+    weather: weather,
+    wind: wind,
+    dt: dt,
+    timezone: timezone,
+    visibility: visibility,
+    sys: sys,
   }
 
-  let decode = (json: Js.Json.t)=> {
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
     open Decode.Pipeline
     succeed(make)
     |> field("id", intFromNumber)
@@ -139,19 +126,15 @@ module Response = {
 }
 
 module AirData = {
-  type t = {
-    aqi: int,
+  type t = {aqi: int}
+
+  let make = aqi => {
+    aqi: aqi,
   }
 
-  let make = (aqi) => {
-    aqi: aqi
-  }
-
-  let decode = (json: Js.Json.t)=> {
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
     open Decode.Pipeline
-    succeed(make)
-    |> field("aqi", intFromNumber)
-    |> run(json)
+    succeed(make) |> field("aqi", intFromNumber) |> run(json)
   }
 }
 
@@ -163,14 +146,78 @@ module Air = {
 
   let make = (status, data) => {
     status: status,
+    data: data,
+  }
+
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
+    open Decode.Pipeline
+    succeed(make) |> field("status", string) |> field("data", AirData.decode) |> run(json)
+  }
+}
+
+module UvIndexData = {
+  type t = {uv: int}
+
+  let make = uv => {
+    uv: uv,
+  }
+
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
+    open Decode.Pipeline
+    succeed(make) |> field("uv", intFromNumber) |> run(json)
+  }
+}
+
+module UvIndex = {
+  type t = {data: array<UvIndexData.t>, count: int}
+
+  let make = (data, count) => {
+    data: data,
+    count: count,
+  }
+
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
+    open Decode.Pipeline
+    succeed(make)
+    |> field("data", array(UvIndexData.decode))
+    |> field("count", intFromNumber)
+    |> run(json)
+  }
+}
+
+module ForecastData = {
+  type t = {
+    datetime: string,
+    temp: float
+  }
+
+  let make = (datetime, temp) => {
+    datetime: datetime,
+    temp: temp
+  }
+
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure>  => {
+    open Decode.Pipeline
+    succeed(make)
+    |> field("datetime", string)
+    |> field("temp", floatFromNumber)
+    |> run(json)
+  }
+}
+
+module Forecast = {
+  type t = {
+    data: array<ForecastData.t>
+  }
+  
+  let make = (data) => {
     data: data
   }
 
-  let decode = (json: Js.Json.t)=> {
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure>  => {
     open Decode.Pipeline
     succeed(make)
-    |> field("status", string)
-    |> field("data", AirData.decode)
+    |> field("data", array(ForecastData.decode))
     |> run(json)
   }
 }

@@ -123,6 +123,68 @@ var Air = {
   decode: decode$6
 };
 
+function make$7(uv) {
+  return {
+          uv: uv
+        };
+}
+
+function decode$7(json) {
+  return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "uv", Decode_AsResult_OfParseError.Pipeline.intFromNumber, Curry._1(Decode_AsResult_OfParseError.Pipeline.succeed, make$7)));
+}
+
+var UvIndexData = {
+  make: make$7,
+  decode: decode$7
+};
+
+function make$8(data, count) {
+  return {
+          data: data,
+          count: count
+        };
+}
+
+function decode$8(json) {
+  return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "count", Decode_AsResult_OfParseError.Pipeline.intFromNumber, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "data", Curry._1(Decode_AsResult_OfParseError.Pipeline.array, decode$7), Curry._1(Decode_AsResult_OfParseError.Pipeline.succeed, make$8))));
+}
+
+var UvIndex = {
+  make: make$8,
+  decode: decode$8
+};
+
+function make$9(datetime, temp) {
+  return {
+          datetime: datetime,
+          temp: temp
+        };
+}
+
+function decode$9(json) {
+  return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "temp", Decode_AsResult_OfParseError.Pipeline.floatFromNumber, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "datetime", Decode_AsResult_OfParseError.Pipeline.string, Curry._1(Decode_AsResult_OfParseError.Pipeline.succeed, make$9))));
+}
+
+var ForecastData = {
+  make: make$9,
+  decode: decode$9
+};
+
+function make$10(data) {
+  return {
+          data: data
+        };
+}
+
+function decode$10(json) {
+  return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "data", Curry._1(Decode_AsResult_OfParseError.Pipeline.array, decode$9), Curry._1(Decode_AsResult_OfParseError.Pipeline.succeed, make$10)));
+}
+
+var Forecast = {
+  make: make$10,
+  decode: decode$10
+};
+
 var Decode;
 
 export {
@@ -134,6 +196,10 @@ export {
   $$Response ,
   AirData ,
   Air ,
+  UvIndexData ,
+  UvIndex ,
+  ForecastData ,
+  Forecast ,
   
 }
 /* Decode_AsResult_OfParseError Not a pure module */

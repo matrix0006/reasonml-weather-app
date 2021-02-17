@@ -8,7 +8,7 @@ import * as Spinner$ReasonmlReactApp from "./components/spinner/Spinner.bs.js";
 import * as LeftSection$ReasonmlReactApp from "./layout/left-section/LeftSection.bs.js";
 import * as RightSection$ReasonmlReactApp from "./layout/right-section/RightSection.bs.js";
 
-require("./AppStyle.scss");
+require("./App.scss");
 
 function App(Props) {
   var match = React.useState(function () {
@@ -21,6 +21,16 @@ function App(Props) {
       });
   var setAir = match$1[1];
   var air = match$1[0];
+  var match$2 = React.useState(function () {
+        return Relude_AsyncResult.init;
+      });
+  var setUvIndex = match$2[1];
+  var uvIndex = match$2[0];
+  var match$3 = React.useState(function () {
+        return Relude_AsyncResult.init;
+      });
+  var setForecast = match$3[1];
+  var forecast = match$3[0];
   React.useEffect((function () {
           Curry._1(setWeather, Relude_AsyncResult.toBusy);
           API$ReasonmlReactApp.weather(undefined).then(function (data) {
@@ -47,79 +57,144 @@ function App(Props) {
               });
           
         }), []);
-  var exit = 0;
-  var weatherData;
-  if (typeof weather === "number") {
-    exit = 1;
-  } else if (weather.TAG === /* Reloading */0) {
-    var weatherData$1 = weather._0;
-    if (weatherData$1.TAG === /* Ok */0) {
-      weatherData = weatherData$1._0;
-      exit = 2;
-    } else {
-      exit = 1;
-    }
-  } else {
-    var weatherData$2 = weather._0;
-    if (weatherData$2.TAG !== /* Ok */0) {
-      return React.createElement("span", undefined, "Error occured. Please try again");
-    }
-    weatherData = weatherData$2._0;
-    exit = 2;
-  }
-  switch (exit) {
-    case 1 :
-        return React.createElement(Spinner$ReasonmlReactApp.make, {});
-    case 2 :
-        var tmp;
-        var exit$1 = 0;
-        var airData;
-        if (typeof air === "number") {
-          exit$1 = 3;
-        } else if (air.TAG === /* Reloading */0) {
-          var airData$1 = air._0;
-          if (airData$1.TAG === /* Ok */0) {
-            airData = airData$1._0;
-            exit$1 = 4;
-          } else {
-            exit$1 = 3;
-          }
-        } else {
-          var airData$2 = air._0;
-          if (airData$2.TAG === /* Ok */0) {
-            airData = airData$2._0;
-            exit$1 = 4;
-          } else {
-            tmp = React.createElement("span", undefined, "Error occured. Please try again");
-          }
-        }
-        switch (exit$1) {
-          case 3 :
-              tmp = React.createElement(Spinner$ReasonmlReactApp.make, {});
-              break;
-          case 4 :
-              tmp = React.createElement(RightSection$ReasonmlReactApp.make, {
-                    weatherData: weatherData,
-                    airData: airData
-                  });
-              break;
+  React.useEffect((function () {
+          Curry._1(setUvIndex, Relude_AsyncResult.toBusy);
+          API$ReasonmlReactApp.uvIndex(undefined).then(function (data) {
+                return Promise.resolve(Curry._1(setUvIndex, (function (_prev) {
+                                  if (data.TAG === /* Ok */0) {
+                                    return Relude_AsyncResult.completeOk(data._0);
+                                  } else {
+                                    return Relude_AsyncResult.completeError(data._0);
+                                  }
+                                })));
+              });
           
-        }
-        return React.createElement("div", {
-                    className: "body"
-                  }, React.createElement("div", {
-                        className: "container-fluid h-100"
+        }), []);
+  React.useEffect((function () {
+          Curry._1(setForecast, Relude_AsyncResult.toBusy);
+          API$ReasonmlReactApp.forecast(undefined).then(function (data) {
+                return Promise.resolve(Curry._1(setForecast, (function (_prev) {
+                                  if (data.TAG === /* Ok */0) {
+                                    return Relude_AsyncResult.completeOk(data._0);
+                                  } else {
+                                    return Relude_AsyncResult.completeError(data._0);
+                                  }
+                                })));
+              });
+          
+        }), []);
+  var exit = 0;
+  var exit$1 = 0;
+  if (typeof weather === "number") {
+    if (weather === /* Init */0) {
+      return React.createElement(Spinner$ReasonmlReactApp.make, {});
+    } else {
+      return React.createElement(Spinner$ReasonmlReactApp.make, {});
+    }
+  }
+  if (weather.TAG === /* Reloading */0) {
+    exit$1 = 2;
+  } else {
+    var weatherData = weather._0;
+    if (weatherData.TAG === /* Ok */0 && !(typeof air === "number" || air.TAG !== /* Complete */1)) {
+      var airData = air._0;
+      var weatherData$1 = weatherData._0;
+      if (airData.TAG === /* Ok */0 && !(typeof uvIndex === "number" || uvIndex.TAG !== /* Complete */1)) {
+        var uvIndex$1 = uvIndex._0;
+        if (uvIndex$1.TAG === /* Ok */0 && typeof forecast !== "number") {
+          if (forecast.TAG === /* Reloading */0) {
+            return React.createElement("div", undefined);
+          }
+          var forecast$1 = forecast._0;
+          if (forecast$1.TAG === /* Ok */0) {
+            return React.createElement("div", {
+                        className: "body"
                       }, React.createElement("div", {
-                            className: "row h-100"
+                            className: "container-fluid h-100"
                           }, React.createElement("div", {
-                                className: "left-section"
-                              }, React.createElement(LeftSection$ReasonmlReactApp.make, {
-                                    weatherData: weatherData
-                                  })), React.createElement("div", {
-                                className: "right-section"
-                              }, tmp))));
+                                className: "row h-100"
+                              }, React.createElement("div", {
+                                    className: "left-section"
+                                  }, React.createElement(LeftSection$ReasonmlReactApp.make, {
+                                        weatherData: weatherData$1
+                                      })), React.createElement("div", {
+                                    className: "right-section"
+                                  }, React.createElement(RightSection$ReasonmlReactApp.make, {
+                                        weatherData: weatherData$1,
+                                        airData: airData._0,
+                                        uvIndex: uvIndex$1._0,
+                                        forecast: forecast$1._0
+                                      })))));
+          }
+          exit = 1;
+        } else {
+          exit$1 = 2;
+        }
+      } else {
+        exit$1 = 2;
+      }
+    } else {
+      exit$1 = 2;
+    }
+  }
+  if (exit$1 === 2) {
+    if (typeof air === "number") {
+      return React.createElement(Spinner$ReasonmlReactApp.make, {});
+    }
+    if (typeof uvIndex === "number") {
+      return React.createElement(Spinner$ReasonmlReactApp.make, {});
+    }
+    if (typeof forecast === "number") {
+      return React.createElement(Spinner$ReasonmlReactApp.make, {});
+    }
+    if (typeof weather !== "number") {
+      if (weather.TAG === /* Reloading */0) {
+        exit = 1;
+      } else {
+        if (weather._0.TAG !== /* Ok */0) {
+          return React.createElement("span", undefined, "Error occured. Please try again");
+        }
+        exit = 1;
+      }
+    }
     
   }
+  if (exit === 1) {
+    var exit$2 = 0;
+    if (typeof air !== "number") {
+      if (air.TAG === /* Reloading */0) {
+        exit$2 = 2;
+      } else {
+        if (air._0.TAG !== /* Ok */0) {
+          return React.createElement("span", undefined, "Error occured. Please try again");
+        }
+        exit$2 = 2;
+      }
+    }
+    if (exit$2 === 2) {
+      var exit$3 = 0;
+      if (typeof uvIndex !== "number") {
+        if (uvIndex.TAG === /* Reloading */0) {
+          exit$3 = 3;
+        } else {
+          if (uvIndex._0.TAG !== /* Ok */0) {
+            return React.createElement("span", undefined, "Error occured. Please try again");
+          }
+          exit$3 = 3;
+        }
+      }
+      if (exit$3 === 3 && typeof forecast !== "number") {
+        if (forecast.TAG === /* Reloading */0 || forecast._0.TAG === /* Ok */0) {
+          return React.createElement("div", undefined);
+        } else {
+          return React.createElement("span", undefined, "Error occured. Please try again");
+        }
+      }
+      
+    }
+    
+  }
+  
 }
 
 var make = App;

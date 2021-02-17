@@ -97,6 +97,35 @@ function toMs(second) {
   return second * 1000;
 }
 
+function toPercentage(maximumValue, value) {
+  if (value > maximumValue) {
+    return 100.0;
+  } else {
+    return value / maximumValue * 100;
+  }
+}
+
+function dateToDay(date) {
+  var day = new Date(date).getDay();
+  if (day === 0.0) {
+    return "Sunday";
+  } else if (day === 1.0) {
+    return "Monday";
+  } else if (day === 2.0) {
+    return "Tuesday";
+  } else if (day === 3.0) {
+    return "Wednesday";
+  } else if (day === 4.0) {
+    return "Thursday";
+  } else if (day === 5.0) {
+    return "Friday";
+  } else if (day === 6.0) {
+    return "Saturday";
+  } else {
+    return "";
+  }
+}
+
 export {
   kToC ,
   round ,
@@ -109,6 +138,8 @@ export {
   getTime ,
   convertToDate ,
   toMs ,
+  toPercentage ,
+  dateToDay ,
   
 }
 /* dayTable Not a pure module */

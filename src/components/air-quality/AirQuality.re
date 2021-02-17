@@ -1,3 +1,5 @@
+open Util
+
 [@react.component]
 let make = (~air: int) => {
   let toAirQualityScale = (air: int): string =>
@@ -11,19 +13,13 @@ let make = (~air: int) => {
     | _ => ""
     };
 
-  let toPercentage = (air: int): float => 
-    switch (air) {
-    | air when air > 300 => 100.0
-    | air => ((air |> float_of_int) /. 300.) *. 100. 
-    };
-  
   <Card> 
     <h5 className="card-title mb-4"> {"Air Quality" |> React.string} </h5>
     <div className="card-number mb-4 flex-row d-flex justify-content-between">
       <span>
         {air |> Js.Int.toString |> React.string}
       </span>
-      <Slider percentage={air |> toPercentage} />
+      <Slider percentage={air |> toPercentage(300)} />
     </div>
     <div> {air |> toAirQualityScale |> React.string} </div>
   </Card>;

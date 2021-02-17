@@ -10,15 +10,19 @@ input[type="range"]{
   position: relative;
   background-color: white;
   outline: none;
-  border: #d6d7da solid 1px;
+  border: #d6d7da solid 1px; 
 }
 
 input[type="range"]::-webkit-slider-thumb{
   -webkit-appearance: none;
-  background-color: blue;
+  background-color: #4050D2;
   height: 22px;
   width: 22px;
   border-radius: 50%;
+}
+
+@keyframes slideAnimation {
+  
 }
 
 slider {

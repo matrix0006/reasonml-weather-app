@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import * as Card$ReasonmlReactApp from "../card/Card.bs.js";
+import * as Util$ReasonmlReactApp from "../../utils/Util.bs.js";
 import * as Slider$ReasonmlReactApp from "../slider/Slider.bs.js";
 
 function AirQuality(Props) {
@@ -23,13 +24,6 @@ function AirQuality(Props) {
       return "";
     }
   };
-  var toPercentage = function (air) {
-    if (air > 300) {
-      return 100.0;
-    } else {
-      return air / 300 * 100;
-    }
-  };
   return React.createElement(Card$ReasonmlReactApp.make, {
               children: null
             }, React.createElement("h5", {
@@ -37,7 +31,7 @@ function AirQuality(Props) {
                 }, "Air Quality"), React.createElement("div", {
                   className: "card-number mb-4 flex-row d-flex justify-content-between"
                 }, React.createElement("span", undefined, air.toString()), React.createElement(Slider$ReasonmlReactApp.make, {
-                      percentage: toPercentage(air)
+                      percentage: Util$ReasonmlReactApp.toPercentage(300, air)
                     })), React.createElement("div", undefined, toAirQualityScale(air)));
 }
 

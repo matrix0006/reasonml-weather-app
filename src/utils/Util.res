@@ -76,5 +76,23 @@ let convertToDate = (time: float): string => {
 
 let toMs = (second: float) => second *. 1000.;
 
-// let customLog = data => {
-//   Js.log(data);
+let toPercentage = (maximumValue: int, value: int): float => 
+  switch (value) {
+  | value when value > maximumValue => 100.0
+  | value => ((value |> float_of_int) /. (maximumValue |> float_of_int)) *. 100. 
+  };
+
+let dateToDay: string => string = date => {
+  let day = date |> Js.Date.fromString |> Js.Date.getDay  
+  switch (day) {
+    | day when day == 0.0 => "Sunday"
+    | day when day == 1.0 => "Monday"
+    | day when day == 2.0 => "Tuesday"
+    | day when day == 3.0 => "Wednesday"
+    | day when day == 4.0 => "Thursday"
+    | day when day == 5.0 => "Friday"
+    | day when day == 6.0 => "Saturday"
+    | _                   => ""
+  }
+} 
+                                              

@@ -73,6 +73,24 @@ function air(param) {
             });
 }
 
+function uvIndex(param) {
+  var __x = Endpoints$ReasonmlReactApp.UvIndex.$$fetch(undefined);
+  return fetch(__x, Fetch.RequestInit.make(/* Get */0, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(parseJsonIfOk).then(getErrorBodyText).then(function (result) {
+              return Promise.resolve(Relude_Result.flatMap((function (json) {
+                                return Curry._2(Relude_Result.mapError, Error$ReasonmlReactApp.decode, Shape$ReasonmlReactApp.UvIndex.decode(json));
+                              }), result));
+            });
+}
+
+function forecast(param) {
+  var __x = Endpoints$ReasonmlReactApp.Forecast.$$fetch(undefined);
+  return fetch(__x, Fetch.RequestInit.make(/* Get */0, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(parseJsonIfOk).then(getErrorBodyText).then(function (result) {
+              return Promise.resolve(Relude_Result.flatMap((function (json) {
+                                return Curry._2(Relude_Result.mapError, Error$ReasonmlReactApp.decode, Shape$ReasonmlReactApp.Forecast.decode(json));
+                              }), result));
+            });
+}
+
 var Decode;
 
 export {
@@ -83,6 +101,8 @@ export {
   getErrorBodyText ,
   weather ,
   air ,
+  uvIndex ,
+  forecast ,
   
 }
 /* Relude_Result Not a pure module */
