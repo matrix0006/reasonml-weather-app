@@ -23,20 +23,22 @@ function LeftSection(Props) {
                               className: "icon",
                               src: require("../../assets/icons/location.png")
                             }))), React.createElement("i", {
-                      className: "wi wi-day-cloudy weather-icon-large spacing-small"
+                      className: Util$ReasonmlReactApp.makeWeatherIcon(weatherData.cod) + " weather-icon icon-large spacing-small"
                     }), React.createElement("div", {
                       className: "spacing-small temparature-text large-text"
-                    }, Util$ReasonmlReactApp.round(Util$ReasonmlReactApp.kToC(weatherData.main.temp))), React.createElement("div", {
+                    }, Util$ReasonmlReactApp.round(1, Util$ReasonmlReactApp.kToC(weatherData.main.temp))), React.createElement("div", {
                       className: "spacing-small"
                     }, Util$ReasonmlReactApp.convertToDate(Util$ReasonmlReactApp.toMs(weatherData.dt))), React.createElement("hr", {
                       className: "spacing-small"
                     }), Belt_Array.mapWithIndex(weatherData.weather, (function (i, weather) {
                         return React.createElement("div", {
                                     key: i.toString(),
-                                    className: "flex-row d-flex spacing-small"
-                                  }, React.createElement("i", {
-                                        className: Util$ReasonmlReactApp.makeIcon(weatherData.id)
-                                      }), React.createElement("div", undefined, weather.main, React.createElement("span", {
+                                    className: "flex-row d-flex spacing-small align-items-center"
+                                  }, React.createElement("span", {
+                                        className: "weather-icon icon-small mr-3"
+                                      }, React.createElement("i", {
+                                            className: Util$ReasonmlReactApp.makeWeatherIcon(weather.id)
+                                          })), React.createElement("div", undefined, weather.main, React.createElement("span", {
                                             className: "mx-2"
                                           }, "-"), weather.description));
                       }))));

@@ -178,7 +178,7 @@ function App(Props) {
           exit$3 = 3;
         } else {
           if (uvIndex._0.TAG !== /* Ok */0) {
-            return React.createElement("span", undefined, "Error occured. Please try again");
+            return React.createElement("span", undefined, "3");
           }
           exit$3 = 3;
         }

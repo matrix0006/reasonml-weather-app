@@ -26,12 +26,14 @@ module Main = {
 
 module Weather = {
   type t = {
+    id: int,
     main: string,
     description: string,
     icon: string,
   }
 
-  let make = (main, description, icon) => {
+  let make = (id, main, description, icon) => {
+    id: id,
     main: main,
     description: description,
     icon: icon,
@@ -40,6 +42,7 @@ module Weather = {
   let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
     open Decode.Pipeline
     succeed(make)
+    |> field("id", intFromNumber)
     |> field("main", string)
     |> field("description", string)
     |> field("icon", string)
@@ -49,7 +52,7 @@ module Weather = {
 
 module Wind = {
   type t = {
-    deg: float,
+    deg: int,
     speed: float,
   }
 
@@ -60,7 +63,7 @@ module Wind = {
 
   let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
     open Decode.Pipeline
-    succeed(make) |> field("deg", floatFromNumber) |> field("speed", floatFromNumber) |> run(json)
+    succeed(make) |> field("deg", intFromNumber) |> field("speed", floatFromNumber) |> run(json)
   }
 }
 
@@ -89,6 +92,7 @@ module Response = {
     id: int,
     name: string,
     main: Main.t,
+    cod: int,
     weather: array<Weather.t>,
     wind: Wind.t,
     dt: float,
@@ -97,10 +101,11 @@ module Response = {
     sys: Sys.t,
   }
 
-  let make = (id, name, main, weather, wind, dt, timezone, visibility, sys) => {
+  let make = (id, name, main, cod, weather, wind, dt, timezone, visibility, sys) => {
     id: id,
     name: name,
     main: main,
+    cod: cod,
     weather: weather,
     wind: wind,
     dt: dt,
@@ -115,6 +120,7 @@ module Response = {
     |> field("id", intFromNumber)
     |> field("name", string)
     |> field("main", Main.decode)
+    |> field("cod", intFromNumber)
     |> field("weather", array(Weather.decode))
     |> field("wind", Wind.decode)
     |> field("dt", floatFromNumber)
@@ -156,7 +162,7 @@ module Air = {
 }
 
 module UvIndexData = {
-  type t = {uv: int}
+  type t = {uv: float}
 
   let make = uv => {
     uv: uv,
@@ -164,7 +170,7 @@ module UvIndexData = {
 
   let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
     open Decode.Pipeline
-    succeed(make) |> field("uv", intFromNumber) |> run(json)
+    succeed(make) |> field("uv", floatFromNumber) |> run(json)
   }
 }
 
@@ -185,39 +191,61 @@ module UvIndex = {
   }
 }
 
+module ForecastWeather = {
+  type t = {
+    code: int,
+    description: string,
+    icon: string,
+  }
+
+  let make = (code, description, icon) => {
+    code: code,
+    description: description,
+    icon: icon,
+  }
+
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
+    open Decode.Pipeline
+    succeed(make)
+    |> field("code", intFromNumber)
+    |> field("description", string)
+    |> field("icon", string)
+    |> run(json)
+  }
+}
+
 module ForecastData = {
   type t = {
     datetime: string,
-    temp: float
+    temp: float,
+    weather: ForecastWeather.t,
   }
 
-  let make = (datetime, temp) => {
+  let make = (datetime, temp, weather) => {
     datetime: datetime,
-    temp: temp
+    temp: temp,
+    weather: weather,
   }
 
-  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure>  => {
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
     open Decode.Pipeline
     succeed(make)
     |> field("datetime", string)
     |> field("temp", floatFromNumber)
+    |> field("weather", ForecastWeather.decode)
     |> run(json)
   }
 }
 
 module Forecast = {
-  type t = {
-    data: array<ForecastData.t>
-  }
-  
-  let make = (data) => {
-    data: data
+  type t = {data: array<ForecastData.t>}
+
+  let make = data => {
+    data: data,
   }
 
-  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure>  => {
+  let decode = (json: Js.Json.t): Result.t<t, Decode.ParseError.failure> => {
     open Decode.Pipeline
-    succeed(make)
-    |> field("data", array(ForecastData.decode))
-    |> run(json)
+    succeed(make) |> field("data", array(ForecastData.decode)) |> run(json)
   }
 }

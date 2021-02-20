@@ -21,28 +21,12 @@ function parseJsonIfOk(resp) {
   }
 }
 
-function getErrorBodyJson(x) {
-  if (x.TAG === /* Ok */0) {
-    return Promise.resolve(x);
-  }
-  var resp = x._0;
-  return resp.json().then(function (json) {
-              return Promise.resolve(Relude_Result.error(Error$ReasonmlReactApp.$$fetch([
-                                  resp.status,
-                                  resp.statusText,
-                                  {
-                                    NAME: "json",
-                                    VAL: json
-                                  }
-                                ])));
-            });
-}
-
 function getErrorBodyText(x) {
   if (x.TAG === /* Ok */0) {
     return Promise.resolve(x);
   }
   var resp = x._0;
+  console.log(resp);
   var status = resp.status;
   var statusText = resp.statusText;
   return Promise.resolve(Relude_Result.error(Error$ReasonmlReactApp.$$fetch([
@@ -78,7 +62,10 @@ function uvIndex(param) {
   return fetch(__x, Fetch.RequestInit.make(/* Get */0, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(parseJsonIfOk).then(getErrorBodyText).then(function (result) {
               return Promise.resolve(Relude_Result.flatMap((function (json) {
                                 return Curry._2(Relude_Result.mapError, Error$ReasonmlReactApp.decode, Shape$ReasonmlReactApp.UvIndex.decode(json));
-                              }), result));
+                              }), Relude_Result.tap((function (prim) {
+                                    console.log(prim);
+                                    
+                                  }), result)));
             });
 }
 
@@ -97,7 +84,6 @@ export {
   Decode ,
   Action ,
   parseJsonIfOk ,
-  getErrorBodyJson ,
   getErrorBodyText ,
   weather ,
   air ,

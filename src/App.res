@@ -89,7 +89,7 @@ let make = () => {
    | (_, _ , _, Loading)  => <Spinner/>
    | (Complete(Error(_)), _ , _, _) => <span> {"Error occured. Please try again" |> React.string} </span> 
    | (_ , Complete(Error(_)) , _ , _) => <span> {"Error occured. Please try again" |> React.string} </span> 
-   | (_ , _ , Complete(Error(_)), _) => <span> {"Error occured. Please try again" |> React.string} </span> 
+   | (_ , _ , Complete(Error(_)), _) => <span> {"3" |> React.string} </span>  
    | (_ , _ , _, Complete(Error(_))) => <span> {"Error occured. Please try again" |> React.string} </span> 
    | (Complete(Ok(weatherData)), Complete(Ok(airData)), Complete(Ok(uvIndex)), Complete(Ok(forecast))) =>
     <div className="body">

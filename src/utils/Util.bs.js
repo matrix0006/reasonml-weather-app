@@ -7,12 +7,16 @@ function kToC(kDeg) {
   return kDeg - 273.15;
 }
 
-function round(__x) {
-  return __x.toFixed(2);
+function round(d, __x) {
+  return __x.toFixed(d);
 }
 
-function makeIcon(weatherId) {
-  return "wi wi-owm-" + String(weatherId) + "weather-icon-small";
+function makeWeatherIcon(weatherCode) {
+  return "wi wi-owm-" + weatherCode.toString();
+}
+
+function makeWindIcon(windDeg) {
+  return "wi wi-wind towards-" + windDeg.toString() + "-deg";
 }
 
 function windDirectionFromDegrees(degree) {
@@ -34,8 +38,8 @@ function windDirectionFromDegrees(degree) {
     "NW",
     "NNW"
   ];
-  var i = (degree + 11.25) / 22.5 | 0;
-  var position = i % 16;
+  var i = (degree + 11.25) / 22.5;
+  var position = (i | 0) % 16;
   return Caml_array.get(directions, position);
 }
 
@@ -129,7 +133,8 @@ function dateToDay(date) {
 export {
   kToC ,
   round ,
-  makeIcon ,
+  makeWeatherIcon ,
+  makeWindIcon ,
   windDirectionFromDegrees ,
   msTokmh ,
   toDate ,

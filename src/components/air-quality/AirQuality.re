@@ -19,7 +19,7 @@ let make = (~air: int) => {
       <span>
         {air |> Js.Int.toString |> React.string}
       </span>
-      <Slider percentage={air |> toPercentage(300)} />
+      <Slider percentage={air |> Js.Int.toFloat |> toPercentage(300.0)} />
     </div>
     <div> {air |> toAirQualityScale |> React.string} </div>
   </Card>;

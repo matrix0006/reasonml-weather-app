@@ -19,7 +19,7 @@ function RightSection(Props) {
   var uvIndex = Props.uvIndex;
   var forecast = Props.forecast;
   var uvDataOpt = Relude_Array.head(uvIndex.data);
-  var uvData = uvDataOpt !== undefined ? uvDataOpt.uv : 0;
+  var uvData = uvDataOpt !== undefined ? uvDataOpt.uv : 0.0;
   return React.createElement("div", {
               className: "row"
             }, React.createElement("div", {

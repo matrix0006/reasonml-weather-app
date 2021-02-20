@@ -6,7 +6,7 @@ let make = (~weatherData: Shape.Response.t, ~airData: Shape.Air.t, ~uvIndex: Sha
   let uvDataOpt = uvIndex.data |> Array.head
   let uvData = switch (uvDataOpt) {
     | Some(uvData) => uvData.uv
-    | None => 0
+    | None => 0.0
   }
 
   <div className="row">

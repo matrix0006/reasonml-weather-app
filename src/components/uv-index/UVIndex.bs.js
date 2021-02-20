@@ -18,10 +18,10 @@ function UVIndex(Props) {
                   className: "flex-row d-flex align-items-center justify-content-center"
                 }, React.createElement("div", {
                       className: "semi-donut",
-                      style: ReactDOMStyle.unsafeAddProp(customStyle, "--percentage", Util$ReasonmlReactApp.toPercentage(12, uvIndex).toString())
+                      style: ReactDOMStyle.unsafeAddProp(customStyle, "--percentage", Util$ReasonmlReactApp.toPercentage(12.0, uvIndex).toString())
                     }, React.createElement("span", {
                           className: "index-value"
-                        }, String(uvIndex)))));
+                        }, Util$ReasonmlReactApp.round(0, uvIndex)))));
 }
 
 var make = UVIndex;

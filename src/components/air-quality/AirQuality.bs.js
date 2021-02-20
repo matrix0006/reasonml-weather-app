@@ -31,7 +31,7 @@ function AirQuality(Props) {
                 }, "Air Quality"), React.createElement("div", {
                   className: "card-number mb-4 flex-row d-flex justify-content-between"
                 }, React.createElement("span", undefined, air.toString()), React.createElement(Slider$ReasonmlReactApp.make, {
-                      percentage: Util$ReasonmlReactApp.toPercentage(300, air)
+                      percentage: Util$ReasonmlReactApp.toPercentage(300.0, air)
                     })), React.createElement("div", undefined, toAirQualityScale(air)));
 }
 

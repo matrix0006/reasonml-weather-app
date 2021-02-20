@@ -18,20 +18,20 @@ let parseJsonIfOk: Fetch.Response.t => Js.Promise.t<Result.t<Js.Json.t, Fetch.Re
     resp |> Result.error |> resolve
   }
 
-let getErrorBodyJson: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t<
-  Result.t<Js.Json.t, Error.t>,
-> = x =>
-  switch x {
-  | Ok(_json) as ok => ok |> resolve
-  | Error(resp) =>
-    resp
-    |> Response.json
-    |> then_(json =>
-      Error.fetch((resp |> Fetch.Response.status, resp |> Fetch.Response.statusText, #json(json)))
-      |> Result.error
-      |> resolve
-    )
-  }
+/* let getErrorBodyJson: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t< */
+/*   Result.t<Js.Json.t, Error.t>, */
+/* > = x => */
+/*   switch x { */
+/*   | Ok(_json) as ok => ok |> resolve */
+/*   | Error(resp) => */
+/*     resp */
+/*     |> Response.json */
+/*     |> then_(json => */
+/*       Error.fetch((resp |> Fetch.Response.status, resp |> Fetch.Response.statusText, #json(json))) */
+/*       |> Result.error */
+/*       |> resolve */
+/*     ) */
+/*   } */
 
 let getErrorBodyText: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t<
   Result.t<Js.Json.t, Error.t>,
@@ -39,6 +39,7 @@ let getErrorBodyText: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t<
   switch x {
   | Ok(_json) as ok => ok |> resolve
   | Error(resp) =>
+    Js.log(resp);
     let status = resp |> Fetch.Response.status
     let statusText = resp |> Fetch.Response.statusText
     let bodyText = #text("FIXME: show body text instead")
@@ -77,6 +78,7 @@ let uvIndex: unit => Js.Promise.t<Result.t<Shape.UvIndex.t, Error.t>> = () => {
   |> then_(getErrorBodyText)
   |> then_(result =>
     result
+    |> Result.tap(Js.log)
     |> Result.flatMap(json => json |> Shape.UvIndex.decode |> Result.mapError(Error.decode))
     |> resolve
   )
