@@ -1,5 +1,6 @@
 
 
+import * as Curry from "bs-platform/lib/es6/curry.js";
 import * as React from "react";
 import * as Belt_Array from "bs-platform/lib/es6/belt_Array.js";
 import * as Util$ReasonmlReactApp from "../../utils/Util.bs.js";
@@ -8,6 +9,7 @@ require("./LeftSection.scss");
 
 function LeftSection(Props) {
   var weatherData = Props.weatherData;
+  var onInputChange = Props.onInputChange;
   return React.createElement("div", {
               className: "row"
             }, React.createElement("div", {
@@ -16,7 +18,10 @@ function LeftSection(Props) {
                       className: "flex-row d-flex text-input-wrapper spacing"
                     }, React.createElement("input", {
                           className: "text-input",
-                          placeholder: "Search for places..."
+                          placeholder: "Search for places...",
+                          onChange: (function ($$event) {
+                              return Curry._1(onInputChange, Util$ReasonmlReactApp.valueFromEvent($$event));
+                            })
                         }), React.createElement("div", {
                           className: "icon-wrapper"
                         }, React.createElement("img", {

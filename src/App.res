@@ -13,7 +13,7 @@ let make = () => {
   React.useEffect1(() => {
     setWeather(_prev => _prev |> AsyncResult.toBusy)
 
-    API.weather()
+    API.weather("Bangkok")
     |> then_(data =>
       setWeather(_prev =>
         switch data {
@@ -30,7 +30,7 @@ let make = () => {
   React.useEffect1(() => {
     setAir(_prev => _prev |> AsyncResult.toBusy)
 
-    API.air()
+    API.air("Bangkok")
     |> then_(data =>
       setAir(_prev =>
         switch data {
@@ -47,7 +47,7 @@ let make = () => {
   React.useEffect1(() => {
     setUvIndex(_prev => _prev |> AsyncResult.toBusy)
 
-    API.uvIndex()
+    API.uvIndex("Bangkok")
     |> then_(data =>
       setUvIndex(_prev =>
         switch data {
@@ -64,7 +64,7 @@ let make = () => {
   React.useEffect1(() => {
     setForecast(_prev => _prev |> AsyncResult.toBusy)
 
-    API.forecast()
+    API.forecast("Bangkok")
     |> then_(data =>
       setForecast(_prev =>
         switch data {
@@ -78,30 +78,44 @@ let make = () => {
     None
   }, [])
 
+  let onInputChange = event => {
+    Js.log(event)
+  }
+
   switch appState {
-   | (Init, _ , _ , _)    => <Spinner/>
-   | (_, Init , _, _)     => <Spinner/>
-   | (_, _ , Init, _)     => <Spinner/>
-   | (_, _ , _, Init)     => <Spinner/>
-   | (Loading, _ , _, _)  => <Spinner/>
-   | (_, Loading , _ ,_)  => <Spinner/>
-   | (_, _ , Loading, _)  => <Spinner/>
-   | (_, _ , _, Loading)  => <Spinner/>
-   | (Complete(Error(_)), _ , _, _) => <span> {"Error occured. Please try again" |> React.string} </span> 
-   | (_ , Complete(Error(_)) , _ , _) => <span> {"Error occured. Please try again" |> React.string} </span> 
-   | (_ , _ , Complete(Error(_)), _) => <span> {"3" |> React.string} </span>  
-   | (_ , _ , _, Complete(Error(_))) => <span> {"Error occured. Please try again" |> React.string} </span> 
-   | (Complete(Ok(weatherData)), Complete(Ok(airData)), Complete(Ok(uvIndex)), Complete(Ok(forecast))) =>
+  | (Init, _, _, _) => <Spinner />
+  | (_, Init, _, _) => <Spinner />
+  | (_, _, Init, _) => <Spinner />
+  | (_, _, _, Init) => <Spinner />
+  | (Loading, _, _, _) => <Spinner />
+  | (_, Loading, _, _) => <Spinner />
+  | (_, _, Loading, _) => <Spinner />
+  | (_, _, _, Loading) => <Spinner />
+  | (Complete(Error(_)), _, _, _) =>
+    <span> {"Error occured. Please try again" |> React.string} </span>
+  | (_, Complete(Error(_)), _, _) =>
+    <span> {"Error occured. Please try again" |> React.string} </span>
+  | (_, _, Complete(Error(_)), _) => <span> {"3" |> React.string} </span>
+  | (_, _, _, Complete(Error(_))) =>
+    <span> {"Error occured. Please try again" |> React.string} </span>
+  | (
+      Complete(Ok(weatherData)),
+      Complete(Ok(airData)),
+      Complete(Ok(uvIndex)),
+      Complete(Ok(forecast)),
+    ) =>
     <div className="body">
       <div className="container-fluid h-100">
         <div className="row h-100">
-          <div className="left-section"> <LeftSection weatherData /> </div>
+          <div className="left-section">
+            <LeftSection weatherData onInputChange={onInputChange} />
+          </div>
           <div className="right-section">
-            <RightSection weatherData airData uvIndex forecast/>
+            <RightSection weatherData airData uvIndex forecast />
           </div>
         </div>
       </div>
     </div>
-    | (_, _ , _, _) => <div></div>
+  | (_, _, _, _) => <div />
   }
 }

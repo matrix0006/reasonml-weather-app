@@ -3,8 +3,8 @@
 
 var apiKey = "486699348d13d23e215f3c3415bfb96d";
 
-function $$fetch(param) {
-  return "http://api.openweathermap.org/data/2.5/weather?q=Bangkok&appid=486699348d13d23e215f3c3415bfb96d";
+function $$fetch($$location) {
+  return "http://api.openweathermap.org/data/2.5/weather?q=" + $$location + "&appid=" + apiKey;
 }
 
 var Weather = {
@@ -14,8 +14,8 @@ var Weather = {
 
 var token = "3bddfe1c5704b7314024abed471200c3dd3314bc";
 
-function $$fetch$1(param) {
-  return "https://api.waqi.info/feed/bangkok/?token=3bddfe1c5704b7314024abed471200c3dd3314bc";
+function $$fetch$1($$location) {
+  return "https://api.waqi.info/feed/" + $$location + "/?token=" + token;
 }
 
 var Air = {
@@ -25,8 +25,8 @@ var Air = {
 
 var apiKey$1 = "8e05c75ba0f4470483e969c99170b4c6";
 
-function $$fetch$2(param) {
-  return "https://api.weatherbit.io/v2.0/current?city=Bangkok&key=8e05c75ba0f4470483e969c99170b4c6";
+function $$fetch$2($$location) {
+  return "https://api.weatherbit.io/v2.0/current?city=" + $$location + "&key=" + apiKey$1;
 }
 
 var UvIndex = {
@@ -36,8 +36,8 @@ var UvIndex = {
 
 var apiKey$2 = "8e05c75ba0f4470483e969c99170b4c6";
 
-function $$fetch$3(param) {
-  return "https://api.weatherbit.io/v2.0/forecast/daily?city=Bangkok&key=8e05c75ba0f4470483e969c99170b4c6";
+function $$fetch$3($$location) {
+  return "https://api.weatherbit.io/v2.0/forecast/daily?city=" + $$location + "&key=" + apiKey$2;
 }
 
 var Forecast = {

@@ -92,3 +92,5 @@ let dateToDay: string => string = date => {
   | _ => ""
   }
 }
+
+let valueFromEvent = event => ReactEvent.Form.target(event)["value"]

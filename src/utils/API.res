@@ -18,20 +18,20 @@ let parseJsonIfOk: Fetch.Response.t => Js.Promise.t<Result.t<Js.Json.t, Fetch.Re
     resp |> Result.error |> resolve
   }
 
-/* let getErrorBodyJson: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t< */
-/*   Result.t<Js.Json.t, Error.t>, */
-/* > = x => */
-/*   switch x { */
-/*   | Ok(_json) as ok => ok |> resolve */
-/*   | Error(resp) => */
-/*     resp */
-/*     |> Response.json */
-/*     |> then_(json => */
-/*       Error.fetch((resp |> Fetch.Response.status, resp |> Fetch.Response.statusText, #json(json))) */
-/*       |> Result.error */
-/*       |> resolve */
-/*     ) */
-/*   } */
+let getErrorBodyJson: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t<
+  Result.t<Js.Json.t, Error.t>,
+> = x =>
+  switch x {
+  | Ok(_json) as ok => ok |> resolve
+  | Error(resp) =>
+    resp
+    |> Response.json
+    |> then_(json =>
+      Error.fetch((resp |> Fetch.Response.status, resp |> Fetch.Response.statusText, #json(json)))
+      |> Result.error
+      |> resolve
+    )
+  }
 
 let getErrorBodyText: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t<
   Result.t<Js.Json.t, Error.t>,
@@ -39,7 +39,7 @@ let getErrorBodyText: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t<
   switch x {
   | Ok(_json) as ok => ok |> resolve
   | Error(resp) =>
-    Js.log(resp);
+    Js.log(resp)
     let status = resp |> Fetch.Response.status
     let statusText = resp |> Fetch.Response.statusText
     let bodyText = #text("FIXME: show body text instead")
@@ -47,8 +47,8 @@ let getErrorBodyText: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t<
     Error.fetch((status, statusText, bodyText)) |> Result.error |> resolve
   }
 
-let weather: unit => Js.Promise.t<Result.t<Shape.Response.t, Error.t>> = () => {
-  Endpoints.Weather.fetch()
+let weather: string => Js.Promise.t<Result.t<Shape.Response.t, Error.t>> = location => {
+  Endpoints.Weather.fetch(location)
   |> fetchWithInit(_, RequestInit.make(~method_=Get, ()))
   |> then_(parseJsonIfOk)
   |> then_(getErrorBodyText)
@@ -59,8 +59,8 @@ let weather: unit => Js.Promise.t<Result.t<Shape.Response.t, Error.t>> = () => {
   )
 }
 
-let air: unit => Js.Promise.t<Result.t<Shape.Air.t, Error.t>> = () => {
-  Endpoints.Air.fetch()
+let air: string => Js.Promise.t<Result.t<Shape.Air.t, Error.t>> = location => {
+  Endpoints.Air.fetch(location)
   |> fetchWithInit(_, RequestInit.make(~method_=Get, ()))
   |> then_(parseJsonIfOk)
   |> then_(getErrorBodyText)
@@ -71,8 +71,8 @@ let air: unit => Js.Promise.t<Result.t<Shape.Air.t, Error.t>> = () => {
   )
 }
 
-let uvIndex: unit => Js.Promise.t<Result.t<Shape.UvIndex.t, Error.t>> = () => {
-  Endpoints.UvIndex.fetch()
+let uvIndex: string => Js.Promise.t<Result.t<Shape.UvIndex.t, Error.t>> = location => {
+  Endpoints.UvIndex.fetch(location)
   |> fetchWithInit(_, RequestInit.make(~method_=Get, ()))
   |> then_(parseJsonIfOk)
   |> then_(getErrorBodyText)
@@ -84,8 +84,8 @@ let uvIndex: unit => Js.Promise.t<Result.t<Shape.UvIndex.t, Error.t>> = () => {
   )
 }
 
-let forecast: unit => Js.Promise.t<Result.t<Shape.Forecast.t, Error.t>> = () => {
-  Endpoints.Forecast.fetch()
+let forecast: string => Js.Promise.t<Result.t<Shape.Forecast.t, Error.t>> = location => {
+  Endpoints.Forecast.fetch(location)
   |> fetchWithInit(_, RequestInit.make(~method_=Get, ()))
   |> then_(parseJsonIfOk)
   |> then_(getErrorBodyText)

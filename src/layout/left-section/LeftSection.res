@@ -2,11 +2,15 @@ open Util
 Util.requireCSS("./LeftSection.scss")
 
 @react.component
-let make = (~weatherData: Shape.Response.t) => {
+let make = (~weatherData: Shape.Response.t, ~onInputChange) => {
   <div className="row">
     <div className="col col-wrapper py-3">
       <div className="flex-row d-flex text-input-wrapper spacing">
-        <input className="text-input" placeholder="Search for places..." />
+        <input
+          onChange={event => event->valueFromEvent |> onInputChange}
+          className="text-input"
+          placeholder="Search for places..."
+        />
         <div className="icon-wrapper">
           <img className="icon" src={require("../../assets/icons/location.png")} />
         </div>

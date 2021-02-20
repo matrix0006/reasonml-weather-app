@@ -130,6 +130,10 @@ function dateToDay(date) {
   }
 }
 
+function valueFromEvent($$event) {
+  return $$event.target.value;
+}
+
 export {
   kToC ,
   round ,
@@ -145,6 +149,7 @@ export {
   toMs ,
   toPercentage ,
   dateToDay ,
+  valueFromEvent ,
   
 }
 /* dayTable Not a pure module */

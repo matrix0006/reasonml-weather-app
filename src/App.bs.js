@@ -33,7 +33,7 @@ function App(Props) {
   var forecast = match$3[0];
   React.useEffect((function () {
           Curry._1(setWeather, Relude_AsyncResult.toBusy);
-          API$ReasonmlReactApp.weather(undefined).then(function (data) {
+          API$ReasonmlReactApp.weather("Bangkok").then(function (data) {
                 return Promise.resolve(Curry._1(setWeather, (function (_prev) {
                                   if (data.TAG === /* Ok */0) {
                                     return Relude_AsyncResult.completeOk(data._0);
@@ -46,7 +46,7 @@ function App(Props) {
         }), []);
   React.useEffect((function () {
           Curry._1(setAir, Relude_AsyncResult.toBusy);
-          API$ReasonmlReactApp.air(undefined).then(function (data) {
+          API$ReasonmlReactApp.air("Bangkok").then(function (data) {
                 return Promise.resolve(Curry._1(setAir, (function (_prev) {
                                   if (data.TAG === /* Ok */0) {
                                     return Relude_AsyncResult.completeOk(data._0);
@@ -59,7 +59,7 @@ function App(Props) {
         }), []);
   React.useEffect((function () {
           Curry._1(setUvIndex, Relude_AsyncResult.toBusy);
-          API$ReasonmlReactApp.uvIndex(undefined).then(function (data) {
+          API$ReasonmlReactApp.uvIndex("Bangkok").then(function (data) {
                 return Promise.resolve(Curry._1(setUvIndex, (function (_prev) {
                                   if (data.TAG === /* Ok */0) {
                                     return Relude_AsyncResult.completeOk(data._0);
@@ -72,7 +72,7 @@ function App(Props) {
         }), []);
   React.useEffect((function () {
           Curry._1(setForecast, Relude_AsyncResult.toBusy);
-          API$ReasonmlReactApp.forecast(undefined).then(function (data) {
+          API$ReasonmlReactApp.forecast("Bangkok").then(function (data) {
                 return Promise.resolve(Curry._1(setForecast, (function (_prev) {
                                   if (data.TAG === /* Ok */0) {
                                     return Relude_AsyncResult.completeOk(data._0);
@@ -83,6 +83,10 @@ function App(Props) {
               });
           
         }), []);
+  var onInputChange = function ($$event) {
+    console.log($$event);
+    
+  };
   var exit = 0;
   var exit$1 = 0;
   if (typeof weather === "number") {
@@ -116,7 +120,8 @@ function App(Props) {
                               }, React.createElement("div", {
                                     className: "left-section"
                                   }, React.createElement(LeftSection$ReasonmlReactApp.make, {
-                                        weatherData: weatherData$1
+                                        weatherData: weatherData$1,
+                                        onInputChange: onInputChange
                                       })), React.createElement("div", {
                                     className: "right-section"
                                   }, React.createElement(RightSection$ReasonmlReactApp.make, {
