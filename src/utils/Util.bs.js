@@ -1,5 +1,7 @@
 
 
+import * as Curry from "bs-platform/lib/es6/curry.js";
+import * as React from "react";
 import * as Caml_array from "bs-platform/lib/es6/caml_array.js";
 import * as Belt_MapString from "bs-platform/lib/es6/belt_MapString.js";
 
@@ -134,6 +136,25 @@ function valueFromEvent($$event) {
   return $$event.target.value;
 }
 
+function useDebounce(value, delay) {
+  var match = React.useState(function () {
+        return value;
+      });
+  var setDebouncedValue = match[1];
+  React.useEffect((function () {
+          var handler = setTimeout((function (param) {
+                  return Curry._1(setDebouncedValue, (function (param) {
+                                return value;
+                              }));
+                }), delay);
+          return (function (param) {
+                    clearTimeout(handler);
+                    
+                  });
+        }), [value]);
+  return match[0];
+}
+
 export {
   kToC ,
   round ,
@@ -150,6 +171,7 @@ export {
   toPercentage ,
   dateToDay ,
   valueFromEvent ,
+  useDebounce ,
   
 }
 /* dayTable Not a pure module */

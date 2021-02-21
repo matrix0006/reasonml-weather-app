@@ -7,8 +7,6 @@ import * as Error$ReasonmlReactApp from "./Error.bs.js";
 import * as Shape$ReasonmlReactApp from "./Shape.bs.js";
 import * as Endpoints$ReasonmlReactApp from "./Endpoints.bs.js";
 
-var Action = {};
-
 function parseJsonIfOk(resp) {
   if (resp.ok) {
     return resp.json().then(function (json) {
@@ -99,7 +97,6 @@ var Decode;
 
 export {
   Decode ,
-  Action ,
   parseJsonIfOk ,
   getErrorBodyJson ,
   getErrorBodyText ,

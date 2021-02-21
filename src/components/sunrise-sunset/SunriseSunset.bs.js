@@ -6,11 +6,6 @@ import * as Util$ReasonmlReactApp from "../../utils/Util.bs.js";
 
 function SunriseSunset(Props) {
   var sys = Props.sys;
-  var timezone = Props.timezone;
-  React.useEffect((function () {
-          console.log(new Date((sys.sunrise + timezone) * 1000.0));
-          
-        }), []);
   return React.createElement(Card$ReasonmlReactApp.make, {
               children: null
             }, React.createElement("h5", {
@@ -22,7 +17,7 @@ function SunriseSunset(Props) {
                     }), React.createElement("span", undefined, Util$ReasonmlReactApp.getTime(new Date(Util$ReasonmlReactApp.toMs(sys.sunrise))))), React.createElement("div", {
                   className: "flex-row d-flex align-items-center"
                 }, React.createElement("i", {
-                      className: "wi wi-sunset  weather-icon"
+                      className: "wi wi-sunset weather-icon"
                     }), React.createElement("span", undefined, Util$ReasonmlReactApp.getTime(new Date(Util$ReasonmlReactApp.toMs(sys.sunset))))));
 }
 

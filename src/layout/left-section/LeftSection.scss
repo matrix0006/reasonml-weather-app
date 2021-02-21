@@ -18,11 +18,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    outline: none;
+    border: none;
 
     .icon {
       max-width: 18px;
       max-height: 18px;
     }
+  }
+
+  .icon-wrapper:hover {
+    background-color: #A9A9A9	
   }
 }
 

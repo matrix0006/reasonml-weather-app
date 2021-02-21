@@ -4,10 +4,6 @@ open Relude.Globals
 
 module Decode = Decode.AsResult.OfParseError
 
-module Action = {
-  type weatherResponse = Fetch
-}
-
 let parseJsonIfOk: Fetch.Response.t => Js.Promise.t<Result.t<Js.Json.t, Fetch.Response.t>> = resp =>
   if Fetch.Response.ok(resp) {
     resp
@@ -46,6 +42,8 @@ let getErrorBodyText: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t<
 
     Error.fetch((status, statusText, bodyText)) |> Result.error |> resolve
   }
+
+type api = [#weather | #air | #uvIndex | #forecast]
 
 let weather: string => Js.Promise.t<Result.t<Shape.Response.t, Error.t>> = location => {
   Endpoints.Weather.fetch(location)
