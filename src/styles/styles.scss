@@ -1,6 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+@font-face {
+  font-family: 'Brandon';
+  src: local('Brandon'), url(/assets/fonts/BrandonText-Regular.otf) format('otf');
+}
+
 @import './weather-icon/css/weather-icons.min.css';
 @import './weather-icon/css/weather-icons-wind.min.css';
 @import './variables.scss';
 @import './card-style.scss';
 @import './global.scss';
+

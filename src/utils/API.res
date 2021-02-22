@@ -46,7 +46,7 @@ let weather: string => Js.Promise.t<Result.t<Shape.Response.t, Error.t>> = locat
   Endpoints.Weather.fetch(location)
   |> fetchWithInit(_, RequestInit.make(~method_=Get, ()))
   |> then_(parseJsonIfOk)
-  |> then_(getErrorBodyText)
+  |> then_(getErrorBodyJson)
   |> then_(result =>
     result
     |> Result.flatMap(json => json |> Shape.Response.decode |> Result.mapError(Error.decode))
@@ -90,4 +90,3 @@ let forecast: string => Js.Promise.t<Result.t<Shape.Forecast.t, Error.t>> = loca
     |> resolve
   )
 }
-

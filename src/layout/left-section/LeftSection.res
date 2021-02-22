@@ -37,7 +37,8 @@ let make = (~weatherData: AsyncResult.t<Shape.Response.t, Error.t>, ~onClick) =>
             className={`${makeWeatherIcon(weatherData.cod)} weather-icon icon-large spacing-small`}
           />
           <div className="spacing-small temparature-text large-text">
-            {weatherData.main.temp |> kToC |> round(1) |> React.string}
+            <span> {weatherData.main.temp |> kToC |> round(1) |> React.string} </span>
+            <span dangerouslySetInnerHTML={{"__html": "&deg;C"}} />
           </div>
           <div className="spacing-small">
             {weatherData.dt |> toMs |> convertToDate |> React.string}

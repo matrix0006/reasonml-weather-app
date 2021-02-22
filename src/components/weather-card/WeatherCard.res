@@ -10,7 +10,10 @@ let make = (~weatherInfo: Shape.ForecastData.t) => {
       <i
         className={`wi wi-owm-${weatherInfo.weather.code |> Js.Int.toString} weather-icon mb-5 custom-icon`}
       />
-      <div className="card-temp"> {weatherInfo.temp |> Js.Float.toString |> React.string} </div>
+      <div className="card-temp">
+        {weatherInfo.temp |> Js.Float.toString |> React.string}
+        <span dangerouslySetInnerHTML={{"__html": "&deg;C"}} />
+      </div>
     </div>
   </div>
 }
