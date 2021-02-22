@@ -16,7 +16,10 @@ let make = (~weatherData: AsyncResult.t<Shape.Response.t, Error.t>, ~onClick) =>
         <input
           onChange={event => event->valueFromEvent |> setValue}
           value
-          className="text-input"
+          className={switch weatherData {
+          | Complete(Error(_)) => "text-input border border-danger"
+          | Complete(Ok(_)) | _ => "text-input"
+          }}
           placeholder="Enter city name..."
         />
         <button type_="submit" className="icon-wrapper">
@@ -24,10 +27,12 @@ let make = (~weatherData: AsyncResult.t<Shape.Response.t, Error.t>, ~onClick) =>
         </button>
       </form>
       {switch weatherData {
+      | Init | Loading | Reloading(_) => <Spinner />
       | Complete(Error(_)) =>
-        <span className="text-danger"> {"City doesn't exist. Please try again" |> React.string} </span>
-      | Complete(Ok(weatherData)) =>
-          <>
+        <span className="text-danger">
+          {"City doesn't exist. Please try again" |> React.string}
+        </span>
+      | Complete(Ok(weatherData)) => <>
           <i
             className={`${makeWeatherIcon(weatherData.cod)} weather-icon icon-large spacing-small`}
           />
@@ -38,26 +43,23 @@ let make = (~weatherData: AsyncResult.t<Shape.Response.t, Error.t>, ~onClick) =>
             {weatherData.dt |> toMs |> convertToDate |> React.string}
           </div>
           <hr className="spacing-small" />
-          {
-            weatherData.weather
-            ->Belt.Array.mapWithIndex((i, weather) => {
-              <div
-                key={i |> Js.Int.toString}
-                className="flex-row d-flex spacing-small align-items-center">
-                <span className="weather-icon icon-small mr-3">
-                  <i className={makeWeatherIcon(weather.id)} />
-                </span>
-                <div>
-                  {weather.main |> React.string}
-                  <span className="mx-2"> {"-" |> React.string} </span>
-                  {weather.description |> React.string}
-                </div>
+          {weatherData.weather
+          ->Belt.Array.mapWithIndex((i, weather) => {
+            <div
+              key={i |> Js.Int.toString}
+              className="flex-row d-flex spacing-small align-items-center">
+              <span className="weather-icon icon-small mr-3">
+                <i className={makeWeatherIcon(weather.id)} />
+              </span>
+              <div>
+                {weather.main |> React.string}
+                <span className="mx-2"> {"-" |> React.string} </span>
+                {weather.description |> React.string}
               </div>
-            })
-            ->React.array
-          }
-          </>
-      | _ => <div></div>
+            </div>
+          })
+          ->React.array}
+        </>
       }}
     </div>
   </div>

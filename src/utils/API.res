@@ -35,15 +35,12 @@ let getErrorBodyText: Result.t<Js.Json.t, Fetch.Response.t> => Js.Promise.t<
   switch x {
   | Ok(_json) as ok => ok |> resolve
   | Error(resp) =>
-    Js.log(resp)
     let status = resp |> Fetch.Response.status
     let statusText = resp |> Fetch.Response.statusText
     let bodyText = #text("FIXME: show body text instead")
 
     Error.fetch((status, statusText, bodyText)) |> Result.error |> resolve
   }
-
-type api = [#weather | #air | #uvIndex | #forecast]
 
 let weather: string => Js.Promise.t<Result.t<Shape.Response.t, Error.t>> = location => {
   Endpoints.Weather.fetch(location)
@@ -93,3 +90,4 @@ let forecast: string => Js.Promise.t<Result.t<Shape.Forecast.t, Error.t>> = loca
     |> resolve
   )
 }
+
