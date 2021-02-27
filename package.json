@@ -19,12 +19,13 @@
     "css"
   ],
   "dependencies": {
+    "bs-platform": "^8.4.2",
     "dompurify": "^2.2.3",
+    "esy": "^0.6.7",
     "marked": "^1.2.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "reason-react": "^0.9.1",
-    "bs-platform": "^8.4.2",
     "serve": "^11.3.2"
   },
   "devDependencies": {
